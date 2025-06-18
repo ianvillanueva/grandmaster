@@ -26,11 +26,11 @@ export default function GrandmastersList() {
 
   const navigate = useNavigate();
 
-  const loadData = async (signal: AbortSignal) => {
+  const loadData = async () => {
     try {
       setLoading(true);
 
-      const all = await fetchGrandmasters(signal);
+      const all = await fetchGrandmasters();
       const filtered = all.players.filter((username: string) =>
         username.toLowerCase().includes(lazyParams.globalFilter.toLowerCase())
       );
@@ -54,14 +54,7 @@ export default function GrandmastersList() {
   };
 
   useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    loadData(signal);
-
-    return () => {
-      controller.abort();
-    };
+    loadData();
   }, [lazyParams]);
 
   const onPage = (e: DataTableStateEvent) => {

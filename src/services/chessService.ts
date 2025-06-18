@@ -5,9 +5,7 @@ import type { PlayerProfile } from '../types/player';
 
 let cachedGM: GMListResponse | null = null;
 const BASE_URL = 'https://api.chess.com/pub';
-export async function fetchGrandmasters(
-  signal?: AbortSignal
-): Promise<GMListResponse> {
+export async function fetchGrandmasters(): Promise<GMListResponse> {
   if (cachedGM) return cachedGM;
   //didn't use the signal since on loading the Empty message is showing
   const { data } = await axios.get<GMListResponse>(`${BASE_URL}/titled/GM`);
